@@ -59,12 +59,12 @@ def predcit():
 
     z,text_name,f_name = clem_lda(a)
 
-<<<<<<< HEAD:app/app.py
+
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
-=======
+
     #return str(z) #, str(df.head())
     return render_template('prediction.html', topics = z)
->>>>>>> origin/master:app/appM.py
+
 
 
 
