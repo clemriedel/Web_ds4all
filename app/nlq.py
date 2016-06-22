@@ -126,3 +126,5 @@ def clem_lda(a):
 
 
 	return topics, text_name, f_name
+
+	

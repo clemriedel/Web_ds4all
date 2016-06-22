@@ -1,7 +1,7 @@
 # Import modules
 import os
 import flask.views
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 from werkzeug import secure_filename
 from nlq import clem_lda
 
@@ -62,10 +62,16 @@ def predcit():
 
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
-    #return str(z) #, str(df.head())
-    return render_template('prediction.html', topics = z)
 
 
+
+@app.route('/predict_fixed', methods=['POST'])
+def predcit_fixed():
+    file_name = 'NSF_test.csv'
+    files = os.listdir('uploads')
+    a = ('uploads/{}'.format(file_name))
+    z,text_name,f_name = clem_lda(a)
+    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
 
 
@@ -91,6 +97,8 @@ def upload():
         return redirect("/")
 
 
+
+
 # This route is expecting a parameter containing the name
 # of a file. Then it will locate that file on the upload
 # directory and show it on the browser, so if the user uploads
@@ -99,6 +107,13 @@ def upload():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
+
+
+@app.route('/return-files/')
+def return_files_tut():
+    return send_file('NSF_test.csv', attachment_filename='NSF_test.csv')
+
 
 class View(flask.views.MethodView):
     def get(self):

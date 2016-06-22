@@ -20,6 +20,10 @@
 .overflow{
     overflow: hidden;
 }
+
+form {
+    display: inline-block; //Or display: inline; 
+}
 </style>
 
 
@@ -90,20 +94,18 @@
       </div>
 
       <div>
-      Data from NSF, biological departement.
-      <form method="get" acion="/static/SFBanner">
-        <button type="submit">Download</button>
-        <a href="data/NSF_test" download="data/NSF_test">Download</a>
-      </form>
+      NSF_test.csv: Data from NSF, biological departement.
 
+    <a href="/return-files/" target="blank"><button class='btn btn-default'>Download!</button></a>    
 
-    <form action="/predict" method="post">
-      <input type="text" name="file_name" />
-      <input type="submit" />
+    Run NLQ with <form action="/predict_fixed" method="post">
+    <input name='NSF_test.csv' type="submit" />
+
     </form>
-    
-      </div>
-    </div>
+
+
+
+
 
 
 
