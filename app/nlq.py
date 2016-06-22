@@ -75,7 +75,7 @@ def clem_lda(a):
 	#tdm.write_csv('matrix.csv', cutoff=1)
 	topics = []
 
-	model = lda.LDA(n_topics, n_iter=500, random_state=1)
+	model = lda.LDA(n_topics, n_iter=1500, random_state=1)
 	model.fit(X)  # model.fit_transform(X) is also available
 	topic_word = model.topic_word_  # model.components_ also works
 	n_top_words = 8
@@ -127,4 +127,3 @@ def clem_lda(a):
 
 	return topics, text_name, f_name
 
-	
