@@ -15,11 +15,12 @@ import nltk.corpus
 import os
 
 
-a = 'uploads/NSF_Bio_sample300.csv'
+#a = 'uploads/NSF_Bio_2015.csv'
 #a = 'uploads/NSF_plasma.csv'
+#a = 'uploads/NSF_Phy_2013.csv'
+#a = 'uploads/NSF_Chem_2013.csv'
 
-
-
+a = 'uploads/NSF_Bio_sample300.csv'
 
 prev_num = 0
 for f in os.listdir('static'):
@@ -75,7 +76,7 @@ X = np.array(temp[1:])
 #tdm.write_csv('matrix.csv', cutoff=1)
 topics = []
 
-model = lda.LDA(n_topics, n_iter=1500, random_state=2)
+model = lda.LDA(n_topics, n_iter=500, random_state=1)
 model.fit(X)  # model.fit_transform(X) is also available
 topic_word = model.topic_word_  # model.components_ also works
 n_top_words = 8

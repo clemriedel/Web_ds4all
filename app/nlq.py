@@ -28,6 +28,7 @@ def clem_lda(a):
 			if num > prev_num:
 				prev_num = num
 	f_name = 'hist_{}.png'.format(prev_num+1)
+	#t_name ='topic_table_{}.csv'.format(prev_num+1)
 
 	with open(a) as f:
 		Header = f.next().split(',')
@@ -45,7 +46,7 @@ def clem_lda(a):
 	    text.append(row[text_name])
 
 	d = len(text)
-	n_topics = 30
+	n_topics = 25
 
 	text_stop = []
 	stop = set(stopwords.words('english'))
@@ -89,42 +90,48 @@ def clem_lda(a):
 	doc_topic = model.doc_topic_
 
 
-	with open('static/topic_table', 'w') as f:
-	    # create header
-	    #header = 'document'
-	    #for k in range(n_topics):
-	    #   header += ', pr_topic_{}'.format(k)
-	    #f.write(header + '\n')
+	# with open('static/{}'.format(t_name), 'w') as f:
+	#     # create header
+	#     #header = 'document'
+	#     #for k in range(n_topics):
+	#     #   header += ', pr_topic_{}'.format(k)
+	#     #f.write(header + '\n')
 
-	    # write one row for each document
-	    # col 1 : document number
-	    # cols 2 -- : topic probabilities
-	    for k in range(d):
-	        # format probabilities into string
-	        str_probs = ','.join(['{:.5e}'.format(pr) for pr in doc_topic[k,:]])
-	        # write line to file
-	        #f.write('{}, {}\n'.format(k, str_probs))
-	        f.write('{}\n'.format(str_probs))
-			
-	dat = np.genfromtxt ('static/topic_table', delimiter=",")
+	#     # write one row for each document
+	#     # col 1 : document number
+	#     # cols 2 -- : topic probabilities
+	#     for k in range(d):
+	#         # format probabilities into string
+	#         str_probs = ','.join(['{:.5e}'.format(pr) for pr in doc_topic[k,:]])
+	#         # write line to file
+	#         #f.write('{}, {}\n'.format(k, str_probs))
+	#         f.write('{}\n'.format(str_probs))
+	
+		
+	# dat = np.genfromtxt ('static/{}'.format(t_name), delimiter=",")
 
-	M = []
+	M_ = []
 	for i in range(len(number)):
-    		M.append(dat[i,:]*float(number[i]))
+    		M_.append(doc_topic[i,:]*float(number[i]))
 
-	M = sum(M)
+	M = sum(M_)
 	Total = sum(M)
 
-	x=np.arange(1, n_topics+1, 1)
-	y=M
 
-	print(f_name)
-	ax = sns.barplot(x, y, color='Blue')
+	x=np.arange(1, n_topics+1, 1)
+
+
+	ax = sns.barplot(x, M, color='Blue')
 	ax.set(xlabel='Topics', ylabel=number_name)
 	ax.set_title('Total: {} {}'.format(int(Total), number_name))
 	num = 1
 	sns.plt.savefig('static/{}'.format(f_name), dpi=300)
+	plt.clf()
+
+	del ax, M, M_, Total
 
 
 	return topics, text_name, f_name
+
+
 
