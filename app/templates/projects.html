@@ -86,22 +86,32 @@ form {
 
   <ul>
 
-
-
       <div class="container">
       <div class="header">
-        <h4 class="text-muted">NSF: Plasma</h4>
+        <h4 class="text-muted">NSF: Chemistry</h4>
       </div>
 
       <div>
-      NSF_plasma.csv: Data from NSF, plasma 730 documents.
+      NSF_Chem_2013
 
-    <a href="/return-files/" target="blank"><button class='btn-md btn-default'>Download</button></a>    
+    <a href="/return_NSF_Chem_2013/" target="blank"><button class='btn-md btn-default'>Download</button></a>    
+    &nbsp; Run NLQ: <form action="/predict_NSF_Chem_2013" method="post">
+    <input name='NSF_Chem_2013.csv' type="submit" />
+    </form> <br><br>
 
-    &nbsp; Run NLQ with <form action="/predict_fixed" method="post">
-    <input name='NSF_plasma.csv' type="submit" />
 
-    </form>
+    <div class="container">
+    <div class="header">
+      <h4 class="text-muted">NSF: Biology</h4>
+    </div>
+
+    <div>
+    NSF_Bio_2015
+
+  <a href="/return_NSF_Bio_2015/" target="blank"><button class='btn-md btn-default'>Download</button></a>    
+  &nbsp; Run NLQ: <form action="/predict_NSF_Bio_2015" method="post">
+  <input name='NSF_Bio_2015.csv' type="submit" />
+  </form>
 
 
 

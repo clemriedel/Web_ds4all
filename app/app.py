@@ -54,7 +54,7 @@ def predcit():
     file_name = request.form['file_name']
     files = os.listdir('uploads')
     if file_name not in files:
-        return 'File does not exist'
+        return 'File does not exist. Did you type the extension .csv?'
 
     a = ('uploads/{}'.format(file_name))
 
@@ -68,17 +68,31 @@ def predcit():
 
 
 
-@app.route('/predict_fixed', methods=['POST'])
-def predcit_fixed():
-    file_name = 'NSF_plasma.csv'
+@app.route('/predict_NSF_Chem_2013', methods=['POST'])
+def predcit_NSF_Chem_2013():
+    fixed_file_name = 'NSF_Chem_2013.csv'
     files = os.listdir('data')
-    a = ('data/{}'.format(file_name))
+    a = ('data/{}'.format(fixed_file_name))
     z,text_name,f_name = clem_lda(a)
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
-@app.route('/return-files/')
-def return_files_tut():
-    return send_file('data/NSF_plasma.csv', as_attachment = True, attachment_filename = 'NSF_plasma.csv')
+@app.route('/return_NSF_Chem_2013/')
+def return_NSF_Chem_2013():
+    return send_file('data/NSF_Chem_2013.csv', as_attachment = True, attachment_filename = 'NSF_Chem_2013')
+
+
+@app.route('/predict_NSF_Bio_2015', methods=['POST'])
+def predcit_NSF_Bio_2015():
+    fixed_file_name = 'NSF_Bio_2015.csv'
+    files = os.listdir('data')
+    a = ('data/{}'.format(fixed_file_name))
+    z,text_name,f_name = clem_lda(a)
+    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+
+@app.route('/return_NSF_Bio_2015/')
+def return_NSF_Bio_2015():
+    return send_file('data/NSF_Bio_2015.csv', as_attachment = True, attachment_filename = 'NSF_Bio_2015')
+
 
 
 
