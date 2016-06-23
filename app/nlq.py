@@ -49,7 +49,7 @@ def clem_lda(a):
 
 	text_stop = []
 	stop = set(stopwords.words('english'))
-	stop |= {'research', 'new', 'made', 'use'}
+	stop |= {'new', 'made', 'use'}
 
 	for i in range(len(text)):
 	    sentence = text[i].lower()
@@ -75,7 +75,7 @@ def clem_lda(a):
 	#tdm.write_csv('matrix.csv', cutoff=1)
 	topics = []
 
-	model = lda.LDA(n_topics, n_iter=1500, random_state=1)
+	model = lda.LDA(n_topics, n_iter=1500, random_state=2)
 	model.fit(X)  # model.fit_transform(X) is also available
 	topic_word = model.topic_word_  # model.components_ also works
 	n_top_words = 8
@@ -112,7 +112,7 @@ def clem_lda(a):
 	for i in range(len(number)):
     		M.append(dat[i,:]*float(number[i]))
 
-	M = sum(M)/(1e6)
+	M = sum(M)
 	Total = sum(M)
 
 	x=np.arange(1, n_topics+1, 1)

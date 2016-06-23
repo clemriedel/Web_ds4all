@@ -1,6 +1,7 @@
 # Import modules
 import os
 import flask.views
+import pdfkit
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 from werkzeug import secure_filename
 from nlq import clem_lda
@@ -60,22 +61,25 @@ def predcit():
     z,text_name,f_name = clem_lda(a)
 
 
-    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name) 
+    #pdfkit.from_file('prediction.html', 'out.pdf')
+
 
 
 
 
 @app.route('/predict_fixed', methods=['POST'])
 def predcit_fixed():
-    file_name = 'NSF_test.csv'
-    files = os.listdir('uploads')
-    a = ('uploads/{}'.format(file_name))
+    file_name = 'NSF_plasma.csv'
+    files = os.listdir('data')
+    a = ('data/{}'.format(file_name))
     z,text_name,f_name = clem_lda(a)
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
+@app.route('/return-files/')
+def return_files_tut():
+    return send_file('data/NSF_plasma.csv', as_attachment = True, attachment_filename = 'NSF_plasma.csv')
 
-
-    
 
 
 # Route that will process the file upload
@@ -110,9 +114,7 @@ def uploaded_file(filename):
 
 
 
-@app.route('/return-files/')
-def return_files_tut():
-    return send_file('NSF_test.csv', attachment_filename='NSF_test.csv')
+
 
 
 class View(flask.views.MethodView):
