@@ -1,7 +1,7 @@
 import csv
 import pandas as pd
 
-input_file = csv.DictReader(open("NSF_ZFull_Cosmology.csv"))
+input_file = csv.DictReader(open("Awards.csv"))
 
 text = [] 
 number = []
