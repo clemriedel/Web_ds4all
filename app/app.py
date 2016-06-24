@@ -103,6 +103,24 @@ def uploaded_file(filename):
 
 
 ### Projetcts routes ###
+# projects_names = ['NSF_Chem_2013']
+
+# for name in projects_names:
+#     predict_name = 'predict_{}'.format(name)
+
+#     @app.route('/predict_{}'.format(name), methods=['POST'])
+#     def predict_name():
+#         fixed_file_name = '{}.csv'.format(name)
+#         files = os.listdir('data')
+#         a = ('data/{}'.format(fixed_file_name))
+#         z,text_name,f_name = clem_lda(a)
+#         return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+
+#     return_name = 'return_{}'.format(name)
+#     @app.route('/return_{}'.format(name))
+#     def return_name():
+#         return send_file(a, as_attachment = True, attachment_filename = 'NSF_Chem_2013')
+
 @app.route('/predict_NSF_Chem_2013', methods=['POST'])
 def predcit_NSF_Chem_2013():
     fixed_file_name = 'NSF_Chem_2013.csv'

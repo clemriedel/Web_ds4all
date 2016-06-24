@@ -33,7 +33,7 @@ def clem_lda(a):
 	with open(a) as f:
 		Header = f.next().split(',')
 	number_name = Header[0]
-	text_name = Header[1][:-2]
+	text_name = Header[1][:-1]
 
 	#Read the input file
 	input_file = csv.DictReader(open(a))

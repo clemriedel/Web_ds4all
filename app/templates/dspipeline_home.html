@@ -75,22 +75,27 @@
 
 <img src="dspipeline.png" height=350 align="right">
 
-In this page I describe how we built an entire end to end pipeline to detect fraud from a flow of data related to event postings and dynamically present the results to the user on a dashboard accessible from an internet browser. If you are new to data science, this page might look daring but please keep reading: we know this inside out and could explain it to a six year old. This study has been performed by Joel Carlson, Real Limoges, Joe Warren and myself in the frame of a 16 hours case study at Galvanize (DSI). <br><br>
+In this page I describe how we built an entire end to end pipeline to detect fraud from a flow of data related to event postings and dynamically present the results to the user on a dashboard accessible from an internet browser. If you are new to data science, this page might look daring but please keep reading: we know this inside out and could explain the concept to a six year old. This study has been performed by Joel Carlson, Real Limoges, Joe Warren and myself in the frame of a 16 hours case study at Galvanize (DSI). <br><br>
 
 
 
-There are a lot of things that are easy to understand:
-- What kind of event are we taking about?
+There are a lot of things that are easy to understand: <br>
+<b> - What kind of events are we taking about? </b> <br>
+Typically: “Hello, we are organizing a lemonade stand in downtown Raleigh to fund the Malcolm X school summer trip. You can pay $10 online and get your spot reserved, we will bring the tables and chairs, you bring the lemonade.” <br><br>
 
 
+<b> - What is fraud? </b> <br>
+Well you did paypal the money, show up for the event but nothing is happening and your money is not going to fund the school summer trip... <br><br>
 
+<b> - So: How do you detect fraud? </b> <br>
+That's the modeling part!
 
 <h4 class="text-muted">Exploratory data analysis</h4>
 
 
 We define 'Premium' transactions as not fraud and all the other as fraud. In the dataset, approximately 14000 transactions are not fraudulent, while the remaining 2000 are classified as fraud, leading to a proportion of 0.14.
 
-As predictive features we identified the body length of the description, account age, whether the transaction listed a venue, and the email address domain name as useful variables.
+There are 17 features associated with this event post such as: location and date of the event, email adress used for the post, ip adress (that we use to localize the origin of the post)... <br><br> As predictive features we identified the body length of the description, account age, whether the transaction listed a venue, and the email address domain name as useful variables.
 
 We drop all the variables that have not been judged to be relevant and dummify the domain names which were present more than 10 times in the database.
 
