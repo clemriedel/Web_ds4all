@@ -4,6 +4,8 @@ import flask.views
 import pdfkit
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 from werkzeug import secure_filename
+from flask_weasyprint import HTML, render_pdf
+from weasyprint import HTML
 from nlq import clem_lda
 
 # Initialize the Flask application
@@ -48,7 +50,6 @@ def education():
 
 
 
-
 @app.route('/predict', methods=['POST'])
 def predcit():
     file_name = request.form['file_name']
@@ -60,14 +61,46 @@ def predcit():
 
     z,text_name,f_name = clem_lda(a)
 
-
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name) 
-    #pdfkit.from_file('prediction.html', 'out.pdf')
 
 
 
+#@app.route('/print_pdf')
+#def print_pdf():
+#    # Render pdf
+#    return render_pdf('/education') -->
 
 
+# Route that will process the file upload
+@app.route('/upload', methods=['POST'])
+def upload():
+    # Get the name of the uploaded file
+    file = request.files['file']
+    # Check if the file is one of the allowed types/extensions
+    if file and allowed_file(file.filename):
+        # Make the filename safe, remove unsupported chars
+        filename = secure_filename(file.filename)
+        # Move the file form the temporal folder to
+        # the upload folder we setup
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Redirect the user to the uploaded_file route, which
+        # will basicaly show on the browser the uploaded file
+        #return 1
+        #redirect(url_for('uploaded_file', filename=filename))
+        return redirect("/")
+
+
+# This route is expecting a parameter containing the name
+# of a file. Then it will locate that file on the upload
+# directory and show it on the browser, so if the user uploads
+# an image, that image is going to be show after the upload
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+
+### Projetcts routes ###
 @app.route('/predict_NSF_Chem_2013', methods=['POST'])
 def predcit_NSF_Chem_2013():
     fixed_file_name = 'NSF_Chem_2013.csv'
@@ -92,44 +125,11 @@ def predcit_NSF_Bio_2015():
 @app.route('/return_NSF_Bio_2015/')
 def return_NSF_Bio_2015():
     return send_file('data/NSF_Bio_2015.csv', as_attachment = True, attachment_filename = 'NSF_Bio_2015')
+##############################################
 
-
-
-
-# Route that will process the file upload
-@app.route('/upload', methods=['POST'])
-def upload():
-    # Get the name of the uploaded file
-    file = request.files['file']
-    # Check if the file is one of the allowed types/extensions
-    if file and allowed_file(file.filename):
-        # Make the filename safe, remove unsupported chars
-        filename = secure_filename(file.filename)
-        # Move the file form the temporal folder to
-        # the upload folder we setup
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Redirect the user to the uploaded_file route, which
-        # will basicaly show on the browser the uploaded file
-        #return 1
-        #redirect(url_for('uploaded_file', filename=filename))
-        return redirect("/")
-
-
-
-
-# This route is expecting a parameter containing the name
-# of a file. Then it will locate that file on the upload
-# directory and show it on the browser, so if the user uploads
-# an image, that image is going to be show after the upload
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
-
-
-
-
+@app.route('/dspipeline')
+def dspeipeline():
+    return render_template('dspipeline_home.html')
 
 class View(flask.views.MethodView):
     def get(self):

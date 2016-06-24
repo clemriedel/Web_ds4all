@@ -70,10 +70,12 @@
   <body>
     <div class="container">
       <div class="header">
-        <h2 class="text-muted">NLQ Report: {{title}}</h2>
+        <h2 class="text-muted">NLQ Report: {{title}}  </h2> 
+        <!-- &nbsp;&nbsp;&nbsp; <a href="{{ url_for('print_pdf') }}"><button class='btn-md btn-default'>Get PDF</button></a>  -->
       </div>
       <hr/>
       <div>
+
 
 
 	<body>
@@ -85,4 +87,6 @@
     {{num}}
 		<img src = {{ url_for('static', filename = f_name)}} height=400>
 	</body>
+
+
 </html>
