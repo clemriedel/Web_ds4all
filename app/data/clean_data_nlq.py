@@ -1,7 +1,7 @@
 import csv
 import pandas as pd
 
-input_file = csv.DictReader(open("Awards.csv"))
+input_file = csv.DictReader(open("NSF_ZFull_journalism.csv"))
 
 text = [] 
 number = []
@@ -16,6 +16,6 @@ for amount in number:
             str(amount).replace("$", "").replace(",", "").replace(".00", "")
                                 )/1e6
                           )
-df = pd.DataFrame({'M$':number_cleaned, 'NSF - Cosmology':text})
+df = pd.DataFrame({'M$':number_cleaned, 'NSF - Journalism':text})
 
-df.to_csv('NSF_cosmology.csv', index = False)
+df.to_csv('NSF_journalism.csv', index = False)

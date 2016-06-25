@@ -103,11 +103,13 @@ def uploaded_file(filename):
 
 @app.route('/return_clean_data/')
 def return_clean_data():
-    return send_file('data/clean_data_nlq.py', as_attachment = True, attachment_filename = 'clean_data_nlq')
+    return send_file('data/clean_data_nlq.py', as_attachment = True, 
+                    attachment_filename = 'clean_data_nlq')
 
 
 #########
-projects_names = ['NSF_chem_2013', 'NSF_bio_2015']
+projects_names = ['NSF_chem_2013', 'NSF_bio_2015', 'NSF_cosmology',
+                'NSF_etno', 'NSF_history', 'NSF_politics', 'NSF_plasma', 'NSF_phy_2013']
 
 @app.route('/predict/<name>', methods=['POST'])
 def predict_name(name):
@@ -122,36 +124,37 @@ def predict_name(name):
 @app.route('/return/<name>/')
 def return_name(name):
     if name in projects_names:
-        return send_file('./data/{}.csv'.format(name), as_attachment = True, attachment_filename = name)
+        return send_file('./data/{}.csv'.format(name), as_attachment = True, 
+                        attachment_filename = name)
 
 ###
 ### Projetcts routes ###
 
-@app.route('/predict_NSF_chem_2013', methods=['POST'])
-def predcit_NSF_chem_2013():
-    fixed_file_name = 'NSF_chem_2013.csv'
-    files = os.listdir('data')
-    a = ('data/{}'.format(fixed_file_name))
-    z,text_name,f_name = clem_lda(a)
-    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+# @app.route('/predict_NSF_chem_2013', methods=['POST'])
+# def predcit_NSF_chem_2013():
+#     fixed_file_name = 'NSF_chem_2013.csv'
+#     files = os.listdir('data')
+#     a = ('data/{}'.format(fixed_file_name))
+#     z,text_name,f_name = clem_lda(a)
+#     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
-@app.route('/return_NSF_chem_2013/')
-def return_NSF_chem_2013():
-    return send_file('data/NSF_chem_2013.csv', as_attachment = True, attachment_filename = 'NSF_chem_2013')
+# @app.route('/return_NSF_chem_2013/')
+# def return_NSF_chem_2013():
+#     return send_file('data/NSF_chem_2013.csv', as_attachment = True, attachment_filename = 'NSF_chem_2013')
 
 
-@app.route('/predict_NSF_bio_2015', methods=['POST'])
-def predcit_NSF_bio_2015():
-    fixed_file_name = 'NSF_bio_2015.csv'
-    files = os.listdir('data')
-    a = ('data/{}'.format(fixed_file_name))
-    z,text_name,f_name = clem_lda(a)
-    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+# @app.route('/predict_NSF_bio_2015', methods=['POST'])
+# def predcit_NSF_bio_2015():
+#     fixed_file_name = 'NSF_bio_2015.csv'
+#     files = os.listdir('data')
+#     a = ('data/{}'.format(fixed_file_name))
+#     z,text_name,f_name = clem_lda(a)
+#     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
-@app.route('/return_NSF_bio_2015/')
-def return_NSF_bio_2015():
-    return send_file('data/NSF_Bio_2015.csv', as_attachment = True, attachment_filename = 'NSF_bio_2015')
-##############################################
+# @app.route('/return_NSF_bio_2015/')
+# def return_NSF_bio_2015():
+#     return send_file('data/NSF_Bio_2015.csv', as_attachment = True, attachment_filename = 'NSF_bio_2015')
+# ##############################################
 
 @app.route('/dspipeline')
 def dspeipeline():
