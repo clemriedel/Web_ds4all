@@ -34,7 +34,7 @@ def nlq():
 
 @app.route('/tutorial')
 def tutorial():
-    return render_template('tutorial.html')
+    return render_template('prediction_plasma.html')
 
 @app.route('/projects')
 def projects():
@@ -47,6 +47,10 @@ def thanks():
 @app.route('/education')
 def education():
     return render_template('education.html')
+
+@app.route('/dspipeline_code')
+def dspipeline_code():
+    return render_template('dspipeline_code.html')
 
 
 
