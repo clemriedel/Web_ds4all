@@ -4,8 +4,7 @@ import flask.views
 import pdfkit
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
 from werkzeug import secure_filename
-#from flask_weasyprint import HTML, render_pdf
-#from weasyprint import HTML
+from flask_weasyprint import HTML, render_pdf
 from nlq import clem_lda
 
 # Initialize the Flask application
@@ -34,7 +33,7 @@ def nlq():
 
 @app.route('/tutorial')
 def tutorial():
-    return render_template('prediction_plasma.html')
+    return render_template('tutorial.html')
 
 @app.route('/projects')
 def projects():
@@ -64,17 +63,11 @@ def predcit():
     a = ('uploads/{}'.format(file_name))
 
     z,text_name,f_name = clem_lda(a)
-
-
-    
     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name) 
 
 
 
-#@app.route('/print_pdf')
-#def print_pdf():
-#    # Render pdf
-#    return render_pdf('/education') -->
+
 
 
 # Route that will process the file upload
@@ -115,50 +108,41 @@ def return_clean_data():
 projects_names = ['NSF_chem_2013', 'NSF_bio_2015', 'NSF_cosmology',
                 'NSF_etno', 'NSF_history', 'NSF_politics', 'NSF_plasma', 'NSF_phy_2013']
 
-@app.route('/predict/<name>', methods=['POST'])
-def predict_name(name):
-    if name in projects_names:
-        fixed_file_name = '{}.csv'.format(name)
-        files = os.listdir('data')
-        a = ('data/{}'.format(fixed_file_name))
-        z,text_name,f_name = clem_lda(a)
-        return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
-
-
 @app.route('/return/<name>/')
 def return_name(name):
     if name in projects_names:
         return send_file('./data/{}.csv'.format(name), as_attachment = True, 
                         attachment_filename = name)
 
-###
-### Projetcts routes ###
 
-# @app.route('/predict_NSF_chem_2013', methods=['POST'])
-# def predcit_NSF_chem_2013():
-#     fixed_file_name = 'NSF_chem_2013.csv'
-#     files = os.listdir('data')
-#     a = ('data/{}'.format(fixed_file_name))
-#     z,text_name,f_name = clem_lda(a)
-#     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
-
-# @app.route('/return_NSF_chem_2013/')
-# def return_NSF_chem_2013():
-#     return send_file('data/NSF_chem_2013.csv', as_attachment = True, attachment_filename = 'NSF_chem_2013')
+# @app.route('/predict/<name>', methods=['POST'])
+# def predict_name(name):
+#     if name in projects_names:
+#         fixed_file_name = '{}.csv'.format(name)
+#         files = os.listdir('data')
+#         a = ('data/{}'.format(fixed_file_name))
+#         z,text_name,f_name = clem_lda(a)
+#         return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
 
 
-# @app.route('/predict_NSF_bio_2015', methods=['POST'])
-# def predcit_NSF_bio_2015():
-#     fixed_file_name = 'NSF_bio_2015.csv'
-#     files = os.listdir('data')
-#     a = ('data/{}'.format(fixed_file_name))
-#     z,text_name,f_name = clem_lda(a)
-#     return render_template('prediction.html', topics = z, title = text_name, f_name = f_name)
+@app.route('/predict/<name>', methods=['POST'])
+def predict_name(name):
+    if name in projects_names:
+        return render_template('prediction_{}.html'.format(name))
 
-# @app.route('/return_NSF_bio_2015/')
-# def return_NSF_bio_2015():
-#     return send_file('data/NSF_Bio_2015.csv', as_attachment = True, attachment_filename = 'NSF_bio_2015')
-# ##############################################
+@app.route('/stat_pdf/<name>')
+def stat_pdf(name):
+    return render_template('prediction_{}.html'.format(name))
+
+
+@app.route('/print_pdf/<name>/')
+def print_pdf(name):
+    if name in projects_names:
+        print name
+        return render_pdf('/stat_pdf/{}'.format(name))
+
+
+
 
 @app.route('/dspipeline')
 def dspeipeline():
