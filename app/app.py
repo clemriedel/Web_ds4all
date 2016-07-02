@@ -1,5 +1,6 @@
 # Import modules
 import os
+import pandas as pd
 import flask.views
 import pdfkit
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
@@ -47,6 +48,10 @@ def thanks():
 def education():
     return render_template('education.html')
 
+@app.route('/clem')
+def clem():
+    return render_template('clem.html')
+
 @app.route('/dspipeline_code')
 def dspipeline_code():
     return render_template('dspipeline_code.html')
@@ -58,12 +63,15 @@ def predcit():
     file_name = request.form['file_name']
     files = os.listdir('uploads')
     if file_name not in files:
-        return 'File does not exist. Did you type the extension .csv?'
+        return 'File does not exist. Did you upload your file? Did you type in the extension .csv before submitting?'
 
     a = ('uploads/{}'.format(file_name))
-
-    z,text_name,f_name = clem_lda(a)
-    return render_template('prediction.html', topics = z, title = text_name, f_name = f_name) 
+    input_file = pd.read_csv(a)
+    if len(input_file) > 3100:
+        return render_template('index.html')
+    else:
+        z,text_name,f_name = clem_lda(a)
+        return render_template('prediction.html', topics = z, title = text_name, f_name = f_name) 
 
 
 
@@ -102,6 +110,16 @@ def uploaded_file(filename):
 def return_clean_data():
     return send_file('data/clean_data_nlq.py', as_attachment = True, 
                     attachment_filename = 'clean_data_nlq')
+
+@app.route('/return_CV/')
+def return_CV():
+    return send_file('static/Riedel_CV.pdf', as_attachment = True, 
+                    attachment_filename = 'Riedel_CV')
+
+@app.route('/return_CV_Full/')
+def return_CV_Full():
+    return send_file('static/Riedel_CV_Full.pdf', as_attachment = True, 
+                    attachment_filename = 'Riedel_CV_Full')
 
 
 #########
