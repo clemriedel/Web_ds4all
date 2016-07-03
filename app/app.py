@@ -56,6 +56,10 @@ def clem():
 def dspipeline_code():
     return render_template('dspipeline_code.html')
 
+@app.route('/clem_pipeline')
+def clem_pipeline():
+    return render_template('clem_pipeline.html')
+
 
 
 @app.route('/predict', methods=['POST'])
@@ -111,15 +115,7 @@ def return_clean_data():
     return send_file('data/clean_data_nlq.py', as_attachment = True, 
                     attachment_filename = 'clean_data_nlq')
 
-@app.route('/return_CV/')
-def return_CV():
-    return send_file('static/Riedel_CV.pdf', as_attachment = True, 
-                    attachment_filename = 'Riedel_CV')
 
-@app.route('/return_CV_Full/')
-def return_CV_Full():
-    return send_file('static/Riedel_CV_Full.pdf', as_attachment = True, 
-                    attachment_filename = 'Riedel_CV_Full')
 
 
 #########
