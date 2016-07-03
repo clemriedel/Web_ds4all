@@ -1,11 +1,17 @@
-# ds4all github repo 
+# Welcome to the ds4all github repo 
 
-Welcome to the ds4all github repo. The easiest way to navigate it is on the associated dynamic website: [ds4all.io](http://54.234.234.146/).
+Welcome to the ds4all github repo. The easiest way to navigate it is on the associated dynamic website: [ds4all.io](http://54.234.234.146/). dss <br>
 
-You can also:
-git clone https://github.com/clemriedel/ds4all 
-cd ds4all/app 
-python app.py 
+The repo is structured as follows: <br>
+  ├── app <br>
+  ├── nlq <br>
+  ├── pipeline <br>
+  ├── README.md
+
+**You can also:** <br>
+git clone https://github.com/clemriedel/ds4all <br>
+cd ds4all/app <br>
+python app.py <br>
 Open chrome and go to http://0.0.0.0:8000/ to run it locally.
 
 
