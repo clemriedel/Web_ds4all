@@ -1,1 +1,1 @@
-This is a devoloping / backup repo. I advise you to look at the ds4all repo for stable code. 
+This is a devoloping / backup repo. I advise you to look at the [ds4all](https://github.com/clemriedel/ds4all) repo for stable code. 
